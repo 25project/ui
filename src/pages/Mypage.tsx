@@ -1,40 +1,45 @@
-import { useState } from 'react';
-import './Mypage.css'; // CSS 파일 추가
+import { useNavigate } from 'react-router-dom';
+import './Mypage.css';
 
 export default function Mypage() {
-  // 피드백 데이터
-  const [feedback, setFeedback] = useState<{ topic: string; message: string }[]>([
-    {
-      topic: 'Grammar',
-      message: '문법에 대한 피드백: 문법적 오류가 조금 있었습니다.',
-    },
-    {
-      topic: 'Vocabulary',
-      message: '단어 사용이 적절했습니다. 더 많은 예시가 필요합니다.',
-    },
-    {
-      topic: 'Conversation',
-      message: '대화 흐름은 자연스러웠습니다. 발음 연습이 필요합니다.',
-    },
-  ]);
+  const navigate = useNavigate();
 
   return (
     <div className="mypage-container">
-      <div className="mypage-card">
-        <h2>👤 마이페이지</h2>
-        <h3>내 피드백</h3>
-        {feedback.length === 0 ? (
-          <p>아직 피드백이 없습니다.</p>
-        ) : (
-          <ul className="feedback-list">
-            {feedback.map((item, index) => (
-              <li key={index} className="feedback-item">
-                <h4>{item.topic}</h4>
-                <p>{item.message}</p>
-              </li>
-            ))}
-          </ul>
-        )}
+      <div className="profile-header">
+        <div className="profile-info">
+          <h2>로그인하세요</h2>
+          <p>당신의 페이지를 보세요.</p>
+        </div>
+        <button onClick={() => navigate('/login')} className="login-btn">회원가입/로그인</button>
+      </div>
+
+      <div className="menu-list">
+      <div className="menu-item" onClick={() => navigate('/my-feedback')}>
+          <span className="menu-icon">📋</span>
+          <span className="menu-text">내 피드백 보기</span>
+        </div>
+        <div className="menu-item" onClick={() => navigate('/service')}>
+          <span className="menu-icon">📞</span>
+          <span className="menu-text">Customer service</span>
+        </div>
+        <div className="menu-item" onClick={() => navigate('/feedback')}>
+          <span className="menu-icon">📝</span>
+          <span className="menu-text">Suggested feedback</span>
+        </div>
+        <div className="menu-item" onClick={() => navigate('/personal-data')}>
+          <span className="menu-icon">🔐</span>
+          <span className="menu-text">Personal data</span>
+        </div>
+        <div className="menu-item" onClick={() => navigate('/announcements')}>
+          <span className="menu-icon">📢</span>
+          <span className="menu-text">공지사항</span>
+        </div>
+        <div className="menu-item" onClick={() => navigate('/faq')}>
+          <span className="menu-icon">❓</span>
+          <span className="menu-text">FAQ</span>
+        </div>
+        
       </div>
     </div>
   );
