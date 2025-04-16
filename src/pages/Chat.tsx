@@ -1,88 +1,51 @@
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import './Chat.css'; // ✅ CSS 추가
+import './Home.css';
 
-type ChatRole = 'user' | 'ai';
-type ChatMessage = {
-  role: ChatRole;
-  text: string;
-};
+export default function Home() {
+  const navigate = useNavigate();
+  const [isSelecting, setIsSelecting] = useState(false); // 선택 화면을 표시할지 여부
 
-export default function Chat() {
-  const location = useLocation();
-  const navigate = useNavigate(); // ✅ 페이지 이동을 위한 useNavigate 추가
-  const topic = location.state?.topic ?? 'default';
+  // Conversation 버튼 클릭 시, 텍스트 채팅 또는 음성 채팅 선택 화면을 표시
+  const handleConversationClick = () => {
+    setIsSelecting(true);
+  };
 
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
-  const [input, setInput] = useState('');
-  const [mode, setMode] = useState<'text' | 'voice'>('text');
-
-  const handleSend = () => {
-    if (!input.trim()) return;
-
-    const userMsg: ChatMessage = {
-      role: 'user',
-      text: input,
-    };
-    setMessages(prev => [...prev, userMsg]);
-
-    setTimeout(() => {
-      const aiMsg: ChatMessage = {
-        role: 'ai',
-        text: `(${topic})에 대한 응답: "${input}"`,
-      };
-      setMessages(prev => [...prev, aiMsg]);
-    }, 1000);
-
-    setInput('');
+  // 선택된 채팅 모드에 따라 Chat.tsx로 이동
+  const handleModeSelect = (mode: string) => {
+    setIsSelecting(false); // 선택 화면 숨기기
+    navigate('/chat', { state: { mode } }); // 선택한 모드에 따라 이동
   };
 
   return (
-    <div className="chat-container">
-      <div className="chat-box">
-        <div className="chat-header">💬 Chat Room - {topic}</div>
+    <div className="home-container">
+      <div className="home-card">
+        <h2>🏠 Welcome Back!</h2>
+        <p>어떤 주제로 영어 연습을 해볼까요?</p>
 
-        <div className="chat-mode-toggle">
-          <button 
-            className={mode === 'text' ? 'active' : ''} 
-            onClick={() => setMode('text')}
-          >
-            💬 텍스트 채팅
-          </button>
-          <button 
-            className={mode === 'voice' ? 'active' : ''} 
-            onClick={() => setMode('voice')}
-          >
-            🎤 음성 채팅
-          </button>
+        <div className="home-buttons">
+          <button onClick={() => navigate('/test')}>🧠 Test</button>
+          <button onClick={() => navigate('/vocab')}>📚 Vocabulary</button>
+          <button onClick={handleConversationClick}>💬 Conversation</button>
+          <button onClick={() => navigate('/feedback')}>📘 Feedback</button> {/* ✅ 피드백 버튼 경로 수정 */}
         </div>
 
-        <div className="chat-messages">
-          {messages.map((msg, idx) => (
-            <div key={idx} className={`message ${msg.role}-message`}>
-              <span>{msg.text}</span>
-            </div>
-          ))}
-        </div>
-
-        {mode === 'text' ? (
-          <div className="chat-input-area">
-            <input
-              className="chat-input"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="Type here..."
-            />
-            <button className="send-button" onClick={handleSend}>Send</button>
-          </div>
-        ) : (
-          <div className="voice-mode">
-            <p>🎤 음성 모드 활성화됨 (추후 음성 인식 기능 추가 예정)</p>
-          </div>
-        )}
-
-        <button className="exit-button" onClick={() => navigate('/home')}>🚪 종료</button> {/* ✅ 종료 버튼 추가 */}
+        <button className="logout-btn" onClick={() => navigate('/login')}>
+          로그아웃
+        </button>
       </div>
+
+      <button className="mypage-btn" onClick={() => navigate('/mypage')}>
+        👤 Mypage
+      </button> {/* 오른쪽 상단에 고정된 마이페이지 버튼 */}
+
+      {/* 채팅 모드 선택 화면 */}
+      {isSelecting && (
+        <div className="chat-mode-selection">
+          <button onClick={() => handleModeSelect('text')}>💬 텍스트 채팅</button>
+          <button onClick={() => handleModeSelect('voice')}>🎤 음성 채팅</button>
+        </div>
+      )}
     </div>
   );
 }
