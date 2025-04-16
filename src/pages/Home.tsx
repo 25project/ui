@@ -4,8 +4,9 @@ import './Home.css';
 export default function Home() {
   const navigate = useNavigate();
 
-  const handleEnterChatRoom = (roomId: string) => {
-    navigate('/chat', { state: { topic: roomId } });
+  // Conversation 버튼 클릭 시 choose.tsx로 이동
+  const handleConversationClick = () => {
+    navigate('/Choose'); // /choose 경로로 이동
   };
 
   return (
@@ -15,10 +16,10 @@ export default function Home() {
         <p>어떤 주제로 영어 연습을 해볼까요?</p>
 
         <div className="home-buttons">
-          <button onClick={() => handleEnterChatRoom('grammar')}>📘 Grammar</button>
-          <button onClick={() => handleEnterChatRoom('vocabulary')}>🧠 Vocabulary</button>
-          <button onClick={() => handleEnterChatRoom('conversation')}>💬 Conversation</button>
-          <button onClick={() => navigate('/vocab')}>📚 단어장</button>
+          <button onClick={() => navigate('/test')}>🧠 Test</button>
+          <button onClick={() => navigate('/vocab')}>📚 Vocabulary</button>
+          <button onClick={handleConversationClick}>💬 Conversation</button>
+          <button onClick={() => navigate('/feedback')}>📘 Feedback</button>
         </div>
 
         <button className="logout-btn" onClick={() => navigate('/login')}>
@@ -27,8 +28,8 @@ export default function Home() {
       </div>
 
       <button className="mypage-btn" onClick={() => navigate('/mypage')}>
-        👤 마이페이지
-      </button> {/* 오른쪽 상단에 고정된 마이페이지 버튼 */}
+        👤 Mypage
+      </button>
     </div>
   );
 }
