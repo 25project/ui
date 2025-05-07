@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Chat.css';
 
@@ -15,12 +15,7 @@ export default function Chat() {
   const [isTopicSelected, setIsTopicSelected] = useState(false); // 주제 선택 여부 상태
   const [selectedTopic, setSelectedTopic] = useState('');
 
-  // 주제 선택 후 화면 변경
-  const handleTopicSelect = (topic: string) => {
-    console.log(`Selected topic: ${topic}`); // 선택된 주제 확인
-    setSelectedTopic(topic);
-    setIsTopicSelected(true); // 주제 선택 후 화면을 채팅으로 변경
-  };
+  const messagesEndRef = useRef<HTMLDivElement>(null); // 최신 메시지로 자동 스크롤을 위한 ref
 
   const handleSend = () => {
     if (!input.trim()) return;
@@ -42,10 +37,23 @@ export default function Chat() {
     setInput('');
   };
 
+  // 주제 선택 후 화면 변경
+  const handleTopicSelect = (topic: string) => {
+    setSelectedTopic(topic);
+    setIsTopicSelected(true); // 주제 선택 후 화면을 채팅으로 변경
+  };
+
   // 종료 버튼 클릭 시 홈 화면으로 이동
   const handleEndChat = () => {
     navigate('/home');
   };
+
+  // 메시지 추가 후, 최신 메시지로 스크롤 이동
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [messages]);
 
   return (
     <div className="chat-container">
@@ -62,7 +70,6 @@ export default function Chat() {
             <button onClick={() => handleTopicSelect('음악')}>🎶 음악</button>
             <button onClick={() => handleTopicSelect('영화')}>🎬 영화</button>
             <button onClick={() => handleTopicSelect('책')}>📚 책</button>
-            <button onClick={() => handleTopicSelect('기타')}> 기타</button>
           </div>
         )}
 
@@ -74,6 +81,7 @@ export default function Chat() {
                 <span>{msg.text}</span>
               </div>
             ))}
+            <div ref={messagesEndRef} /> {/* 자동 스크롤을 위한 참조 */}
           </div>
         )}
 
@@ -85,10 +93,9 @@ export default function Chat() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Type here..."
+              onKeyDown={(e) => e.key === 'Enter' && handleSend()}  // Enter 키로 메시지 보내기
             />
-            <button className="send-button" onClick={handleSend}>
-              Send
-            </button>
+            <button className="send-button" onClick={handleSend}>Send</button>
           </div>
         )}
 
