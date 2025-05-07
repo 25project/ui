@@ -5,6 +5,7 @@
   align-items: center;
   height: 100vh;
   background-color: #f9f9f9;
+  flex-direction: column; /* 세로 방향으로 배치 */
 }
 
 /* 세로 긴 직사각형 채팅 박스 스타일 */
@@ -19,7 +20,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  z-index: 1; /* 채팅 박스는 다른 요소보다 뒤로 */
+  z-index: 1;
 }
 
 /* 채팅 헤더 스타일 */
@@ -38,7 +39,7 @@
   top: 50%; /* 화면 중간에 위치 */
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 2; /* 주제 선택 화면이 채팅 박스보다 앞에 오도록 설정 */
+  z-index: 2;
 }
 
 .topic-selection p {
@@ -47,7 +48,7 @@
 }
 
 .topic-selection button {
-  background-color: #4ea685;
+  background-color: #7caaeb;
   color: white;
   border: none;
   border-radius: 10px;
@@ -59,7 +60,7 @@
 }
 
 .topic-selection button:hover {
-  background-color: #3e8d6f;
+  background-color: #7caaeb;
 }
 
 /* 채팅 메시지 스타일 */
@@ -82,7 +83,7 @@
 }
 
 .ai-message {
-  background-color: #4ea685;
+  background-color: #7caaeb;
   color: white;
   align-self: flex-end;
 }
@@ -103,7 +104,7 @@
 }
 
 .send-button {
-  background-color: #4ea685;
+  background-color: #7caaeb;
   color: white;
   padding: 10px 20px;
   border-radius: 5px;
@@ -112,7 +113,7 @@
 }
 
 .send-button:hover {
-  background-color: #3e8d6f;
+  background-color: #7caaeb;
 }
 
 /* 종료 버튼 스타일 */
