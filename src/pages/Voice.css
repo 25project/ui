@@ -1,20 +1,72 @@
 /* 음성 채팅 화면 스타일 */
-.chat-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f9f9f9;
-    text-align: center;
-  }
-  
-  .chat-container h2 {
-    font-size: 2rem;
-    margin-bottom: 20px;
-  }
-  
-  .chat-container p {
-    font-size: 1.2rem;
-    color: #555;
-  }
-  
+.voice-chat-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f9f9f9;
+}
+
+.voice-chat-box {
+  width: 100%;
+  max-width: 400px;
+  height: 70vh;
+  background-color: #ffffff;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.voice-chat-header {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.voice-chat-messages {
+  flex-grow: 1;
+  margin-bottom: 20px;
+  overflow-y: auto;
+}
+
+.message {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  background-color: #7caaeb;
+  color: white;
+  max-width: 80%;
+  align-self: flex-end;
+}
+
+.voice-chat-controls {
+  display: flex;
+  justify-content: center;
+}
+
+.record-btn {
+  background-color: #7caaeb;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  width: 50%;
+  transition: 0.3s;
+}
+
+.record-btn:hover {
+  background-color: #6b8fe4;
+}
+
+.record-btn.active {
+  background-color: #f44336;
+}
+
+.record-btn.active:hover {
+  background-color: #e53935;
+}
