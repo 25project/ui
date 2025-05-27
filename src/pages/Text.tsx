@@ -1,25 +1,56 @@
 import { useState } from 'react';
-import './Chat.css';  // 스타일 파일 연결
+import { useNavigate } from 'react-router-dom'; 
+import './Chat.css';
 
 export default function Chat() {
-  const [isTopicSelected, setIsTopicSelected] = useState(false); // 주제 선택 여부 상태
+  const [isTopicSelected, setIsTopicSelected] = useState(false);
   const [selectedTopic, setSelectedTopic] = useState('');
   const [messages, setMessages] = useState<string[]>([]);
+  const [input, setInput] = useState('');
+
+  const navigate = useNavigate(); 
 
   const handleTopicSelect = (topic: string) => {
     setSelectedTopic(topic);
     setIsTopicSelected(true);
-    setMessages([...messages, `You selected: ${topic}`]); // 주제 선택 후 메시지 추가
+    setMessages([`You selected: ${topic}`]);
+  };
+
+  const handleSend = () => {
+    if (input.trim()) {
+      setMessages([...messages, input]);
+      setInput('');
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleSend();
+    }
+  };
+
+  const handleExit = () => {
+    setIsTopicSelected(false);
+    setSelectedTopic('');
+    setMessages([]);
+    setInput('');
+    navigate('/feedback');
   };
 
   return (
     <div className="chat-container">
       <div className="chat-box">
+        {isTopicSelected && (
+          <button className="exit-button" onClick={handleExit}>
+            ❌
+          </button>
+        )}
+
         <div className="chat-header">
           {isTopicSelected ? `💬 롤플레이 주제: ${selectedTopic}` : '💬 롤플레이 주제 선택'}
         </div>
 
-        {/* 롤플레이 주제 선택 화면 */}
         {!isTopicSelected && (
           <div className="topic-selection">
             <p>어떤 롤플레이를 할까요?</p>
@@ -30,28 +61,29 @@ export default function Chat() {
           </div>
         )}
 
-        {/* 채팅 메시지 영역 */}
         {isTopicSelected && (
-          <div className="chat-messages">
-            {messages.map((msg, idx) => (
-              <div key={idx} className="message">
-                <span>{msg}</span>
-              </div>
-            ))}
-          </div>
-        )}
+          <>
+            <div className="chat-messages">
+              {messages.map((msg, idx) => (
+                <div key={idx} className="message">
+                  <span>{msg}</span>
+                </div>
+              ))}
+            </div>
 
-        {/* 채팅 입력 영역 */}
-        {isTopicSelected && (
-          <div className="chat-input-area">
-            <input
-              className="chat-input"
-              placeholder="Type your message..."
-            />
-            <button className="send-button">
-              Send
-            </button>
-          </div>
+            <div className="chat-input-area">
+              <input
+                className="chat-input"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={handleKeyDown}
+                placeholder="Type your message..."
+              />
+              <button className="send-button" onClick={handleSend}>
+                Send
+              </button>
+            </div>
+          </>
         )}
       </div>
     </div>
