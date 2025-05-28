@@ -1,4 +1,3 @@
-/* Test 화면 스타일 */
 .test-container {
   display: flex;
   justify-content: center;
@@ -20,10 +19,35 @@
   align-items: center;
 }
 
+.test-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  margin-bottom: 1.5rem;
+}
+
+.back-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #7caaeb;
+  padding: 0;
+  transition: transform 0.2s;
+}
+
+.back-button:hover {
+  transform: scale(1.2);
+  color: #5d96dc;
+}
+
 .test-card h2 {
   font-size: 2rem;
   font-weight: bold;
   color: #333;
+  margin: 0;
 }
 
 .options {
@@ -71,18 +95,4 @@
 .score {
   margin-top: 20px;
   font-size: 1.2rem;
-}
-
-.start-speaking-test-btn {
-  margin-top: 20px;
-  padding: 10px 20px;
-  background-color: #7caaeb;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.start-speaking-test-btn:hover {
-  background-color: #6b99d7;
 }
