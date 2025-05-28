@@ -4,13 +4,17 @@ import './Home.css';
 export default function Home() {
   const navigate = useNavigate();
 
-  // Conversation 버튼 클릭 시 choose.tsx로 이동
   const handleConversationClick = () => {
-    navigate('/Choose'); // /choose 경로로 이동
+    navigate('/Choose');
   };
 
   return (
     <div className="home-container">
+      {/* 마이페이지 버튼을 container 맨 위에 배치 */}
+      <button className="mypage-icon-btn" onClick={() => navigate('/mypage')}>
+        <span className="icon-menu">≡</span>
+      </button>
+
       <div className="home-card">
         <h2>🏠 Welcome Back!</h2>
         <p>어떤 주제로 영어 연습을 해볼까요?</p>
@@ -26,10 +30,6 @@ export default function Home() {
           로그아웃
         </button>
       </div>
-
-      <button className="mypage-btn" onClick={() => navigate('/mypage')}>
-        👤 Mypage
-      </button>
     </div>
   );
 }
